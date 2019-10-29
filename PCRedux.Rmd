@@ -10,10 +10,6 @@ output:
 header-includes:
     - \usepackage[font={small}]{caption}
 bibliography: "literature.bib"
-vignette: >
-  %\VignetteIndexEntry{PCRedux package - an overview}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include=FALSE, echo=FALSE, eval=FALSE}
