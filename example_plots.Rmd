@@ -59,6 +59,9 @@ The decision of the classes (negative, ambiguous, positive) were taken from the 
 dec <- unlist(lapply(1L:(curves -1), function(i) {
   decision_modus(decision_res_kbqPCR[i, 2:8])
 }))
+
+class <- c(y = sum(dec == "y"), a = sum(dec == "a"), n = sum(dec == "n"))
+
 ```
 
 # Visualizng qPCR curves
@@ -71,7 +74,7 @@ p1_pos <- data.frame(kbqPCR[, c(1L, which(dec == "y") + 1)]) %>%
   theme_bw() +
   xlab("Cycle") +
   ylab("Raw RFU") +
-  ggtitle("A) positive") + #qPCR curves
+  ggtitle(paste0("A) positive, ", "n = ", class[1])) + #qPCR curves
   theme(legend.position = "none")
 
 p1_pos
@@ -83,7 +86,7 @@ p1_neg <- data.frame(kbqPCR[, c(1L, which(dec == "n") + 1)]) %>%
   theme_bw() +
   xlab("Cycle") +
   ylab("Raw RFU") +
-  ggtitle("negative") + #qPCR curves
+  ggtitle(paste0("negative, ", "n = ", class[3])) + #qPCR curves
   theme(legend.position = "none")
 
 p1_neg
@@ -95,7 +98,7 @@ p1_amb <- data.frame(kbqPCR[, c(1L, which(dec == "a") + 1)]) %>%
   theme_bw() +
   xlab("Cycle") +
   ylab("Raw RFU") +
-  ggtitle("ambiguous") + #qPCR curves
+  ggtitle(paste0("ambiguous, ", "n = ", class[2])) + #qPCR curves
   theme(legend.position = "none")
 
 p1_amb

@@ -639,7 +639,7 @@ In many instruments, this phase is used to determine the base-line level for the
 2. **Exponential phase**: This phase follows the ground phase and is also called *log-linear phase*. It is characterized by a strong increase of the emitted fluorescence as the DNA amount roughly doubles in each cycle under ideal conditions and when the amount of the synthesized fluorescent labeled PCR product is high enough to be detected by the sensor system. This phase is used for the calculation of the quantification point (Cq) and curve specific amplification efficiency. The most important measurement from qPCRs is the Cq, which signifies the PCR cycle for which the fluorescence exceeds a ``threshold value``. However, there is an ongoing debate as to what a significant and robust threshold value is. An overview and performance comparison of Cq methods is given in @ruijter_evaluation_2013. There are several mathematical methods to calculate the Cq. 
     - The 'classical' threshold value (cycle threshold, Ct) is the intersection between a manually defined straight horizontal line with the quasi-linear phase in the exponential amplification phase (\autoref{figure_quantification_points}A & B). This simple to implement method requires that amplification curves are properly baselined prior to analysis. The Ct method makes the assumption that the amplification efficiency (~ slope in the log-linear phase) is equal across all compared amplification curves [@ruijter_evaluation_2013]. Evidently, this is not always case as exemplified in \autoref{amplification_curve_ROI}C. The Ct method is widely used presumably due to the familiarity of users with this approach (e.&nbsp;g., chemical analysis procedures).  However, this method is statistically unreliable [@ruijter_evaluation_2013; @spiess_impact_2015; @spiess_system-specific_2016]. Moreover, the Ct method gives no stable in predictions if different users are given the same data set to be analyzed. *Therefore, this method is not used within the \texttt{PCRedux} package*.
     - Another Cq method uses the maximum of the second derivative (SDM) [@roediger2015r] (\autoref{figure_quantification_points}C). In all cases, the Cq value can be used to calculate the concentration of target sequence in a sample (low Cq \textrightarrow high target concentration). In contrast, negative or ambiguous amplification curves loosely resemble noise. This noise may appear linear or exhibit a curvature similar to a specific amplification curve (\autoref{htPCR_nap}). This however, may result in faulty interpretation of the amplification curves. Fragmentation, inhibitors and sample handling errors would decrease the slope of the amplification curve [@spiess_highly_2008; @Ritz2008]. The slope and its variation can be considered as predictors. Since the Cq depends on the initial template amount and amplification efficiency, there is no immediate use of the Cq as an predictor. 
-    3. **Plateau phase**: This phase follows the exponential phase and is a consequence of the exhaustion of limited reagents (incl. primers, nucleotides, enzyme activity) in the reaction vessel, limiting the amplification reaction, so that the theoretical maximum amplification efficiency (doubling per cycle) no longer prevails. This turning point, and the progressive limitation of resources, finally leads to a plateau. In the plateau phase, there is in some cases a signal decrease called *hook effect* (\autoref{why_PCRedux} and [@barratt_improving_2002; @isaac_essentials_2009]). The slope (*hook effect*), level and variation can be considered as predictors. 
+    3. **Plateau phase**: This phase follows the exponential phase and is a consequence of the exhaustion of limited reagents (incl. primers, nucleotides, enzyme activity) in the reaction vessel, limiting the amplification reaction, so that the theoretical maximum amplification efficiency (doubling per cycle) no longer prevails. This turning point, and the progressive limitation of resources, finally leads to a plateau. In the plateau phase, there is in some cases a signal decrease called *hook effect* (\autoref{why_PCRedux} and [@barratt_improving_2002; @isaac_essentials_2009; @burdukiewicz_algorithms_2018]). The slope (*hook effect*), level and variation can be considered as predictors. 
 
 If the amplification curve has only a slight positive slope and no perceptible/measureable exponential phase, it can be assumed that the amplification reaction did not occur (\autoref{amplification_curve_ROI}B). Causes may include poor specificity of the PCR primers (non-specific PCR products), degraded sample material, degraded probes or detector failures. If a lot of input DNA is present in a sample, the amplification curve starts to increase in early PCR cycles (1 - 12 cycles). Some PCR devices have a software that corrects this feature without rechecking, resulting in an amplification curve with a negative trend.
 
@@ -927,23 +927,6 @@ library(PCRedux)
 str(pcrfit_single(RAS002[, 2]))
 ```
 
-
-### PCRedux-app
-
-\texttt{PCRedux-app} is a web server, based on the shiny technology [@shiny_2016] wrapped around the ``encu()`` function (\autoref{section_pcrfit_single_pcrfit_parallel}). An user can upload qPCR data and download obtained amplification curve features. 
-
-There are different ways to use the function.
-
-- Through \texttt{RScript} (Scripting Front-End for R):
-    - Enter the command ``Rscript -e 'PCRedux::run_PCRedux()'`` in a console and copy the pasted URL in a browser.
-
-- Through Graphical User Interfaces:
-    - The function can be started directly in \texttt{RStudio} or \texttt{RKWard} by:
-
-```{r, echo=TRUE, eval=FALSE}
-# run the Shiny app 
-PCRedux::run_PCRedux()
-```
 
 ### Amplification Curve Preprocessing
 
@@ -2820,6 +2803,23 @@ print(res_dec_P01.W06)
 ```
 
 The amplification curve `P01. W06` was classified as `r paste0(res_dec_P01.W06$variable[1], "=", res_dec_P01.W06$freq[1])` times and as `r paste0(res_dec_P01.W06$variable[2], "=", res_dec_P01.W06$freq[2])` times. Therefore, the decision would turn `negative`.
+
+### PCRedux-app
+
+\texttt{PCRedux-app} is a web server, based on the shiny technology [@shiny_2016] wrapped around the ``encu()`` function (\autoref{section_pcrfit_single_pcrfit_parallel}). An user can upload qPCR data and download obtained amplification curve features. 
+
+There are different ways to use the function.
+
+- Through \texttt{RScript} (Scripting Front-End for R):
+    - Enter the command ``Rscript -e 'PCRedux::run_PCRedux()'`` in a console and copy the pasted URL in a browser.
+
+- Through Graphical User Interfaces:
+    - The function can be started directly in \texttt{RStudio} or \texttt{RKWard} by:
+
+```{r, echo=TRUE, eval=FALSE}
+# run the Shiny app 
+PCRedux::run_PCRedux()
+```
 
 \newpage
 
