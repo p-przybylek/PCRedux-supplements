@@ -216,7 +216,7 @@ Both principles are used in melting curve analysis, which involves the monitorin
 
 Solid-phase technologies such as **microbead assays** and **microarrays** have been developed to capture specific target sequences from a solution. In this case, target specific nucleic acid capture probes (e.&nbsp;g., DNA, RNA) are immobilized on a solid phase such as a glass slide or microbeads. The target sequences need to be labeled by a biochemical reaction (e.&nbsp;g., by a fluorescence dye) and are subsequently hybridized to the corresponding capture probe. This binding event can be quantified with specific readers or fluorescence microscopy [@rodiger_nucleic_2014].
 
-### Methods based on Nucleic Acid Amplification
+### Methods based on Nucleic Acid Amplification - Applications of qPCRs
 
 The most common used method for nucleic acid detection and quantification is the **polymerase chain reaction (PCR)**. PCR is a biochemical reaction that is used to enzymatically synthesize multiple identical copies of a DNA sequence by a DNA polymerase (e.&nbsp;g., *Taq* polymerase). This is possible by annealing two DNA primer molecules, single stranded (18 - 35 nucleotide long) DNA sequences, which are complementary to the target stand. The primers bind under temperature controlled conditions specific to the target sequence and function as starter molecule for the DNA synthesis by the DNA polymerase. 
 
@@ -226,7 +226,9 @@ The PCR is the recommended procedure for short tandem repeat (STR) analysis. Sho
 
 With the **quantitative PCR** (qPCR) technology, the number of start copies of a target nucleic acid sequence in a genomic or complementary DNA sample can be quantified. qPCR uses the same biochemical principles as PCR. This is possible because the amplification reaction is continuously monitored in each thermo-cycle [@higuchi1993; @rutledge2003]. The resulting kinetics of the amplification process are described in \autoref{section_DataAnalysis}. To quantify the DNA copies, the amplification reaction of the unknown DNA sample is compared with a sample whose concentration is known (e.&nbsp;g. internal standard, dilution series).
 
-Applications of qPCR include the quantification of human nuclear DNA and mitochondrial DNA from forensic evidence [@alonso_real-time_2007], analysis of gene expression [@pabinger_2014; @george_development_2016] or the relationship between (poly)pharmacy and clinical consequences [@maher_clinical_2014; @caudle_prn_2019; @rao_6-week_2018; @mestdagh_long_2016; @giuliano_use_2017; @meyer_high_2017; @lee_high-throughput_2017]. qPCR was used in this work to generate amplification curve data sets. In the later chapters, this work will only focus on qPCR technology.
+qPCR is widely employed for gene expression analysis (GEA) and quantification of human nuclear DNA and mitochondrial DNA from forensic evidence [@alonso_real-time_2007], analysis of gene expression [@pabinger_2014; @george_development_2016] in personalized medicine and forensics [@dvinge_htqpcr:_2009; @lynch_review_2019; @pabinger_2014]. Also the relationship between (poly)pharmacy and clinical consequences [@maher_clinical_2014; @caudle_prn_2019; @rao_6-week_2018; @mestdagh_long_2016; @giuliano_use_2017; @meyer_high_2017; @lee_high-throughput_2017] is studied by qPCR. It is also essential for high-throughput technology validation (e.&nbsp;g.,, next generation sequencing (RNA-seq) and validation of sequencing libraries) [@olagnier_evaluation_2017; @gracz_high-throughput_2015; @fischer_use_2016; @nassirpour_identification_2014]. To make data-scientific steps of qPCR reproducible and to accurately reflect the questions asked is not trivial @taylor_ultimate_2019. 
+
+qPCR was used in this work to generate amplification curve data sets. In the later chapters, this work will only focus on qPCR technology.
 
 In the Life Science sector, qPCR has become indispensable. For one, qPCR is used to investigate biological relationships by gene expression analysis. The qPCR is also used for the preparation and post-processing of NGS experiment [@nassirpour_identification_2014;@cristino_deep_2011]. The RNA-Seq assumes that all transcripts can be sequenced unbiased. In reality, certain DNA sequences (e.&nbsp;g., GC-rich regions) are more poorly processed and so their quantity is often underestimated. Normalization of RNA-Seq data is based on the assumption that each sample contains the equal total amount of expressed mRNA, which does not necessarily have to be the case. NGS data are derived by mapping the sequenced DNA fragments to a genome reference. Here, mutations and single nucleotide polymorphisms (SNPs) are sometimes ignored.
 As a consequence, results vary depending on which mismatches are allowed. The qPCR is used for qualitative and quantitative characterization of the material to be sequenced. Moreover, qPCR is a highly sensitive method for checking the "library DNA" of NGS reactions. Analysis of sequencing data is not the end of an NGS experiment, and sequence variations or expression changes need to be verified reliably. 
@@ -1196,7 +1198,7 @@ Further predictors from the ``pcrfit_single()`` function are:
 - `cpDdiff` is the difference between the first (`cpD1`) and the second derivative maximum `cpD2` ($cpDdiff = cpD1 - cpD2$) **from the fitted model** (\autoref{figure_quantification_points}C). Provided that a model can be exactly fitted, the estimates of the difference are reliable. Higher `cpDdiff` values indicate a negative amplification reaction or a very low amplification efficiency. The comparison of positive and negative amplification curves in \autoref{plot_dat_EffTop}C demonstrates that the classes are significantly different from each other. In the event that the `cpDdiff` value cannot be determined (NA), it is replaced by zero. The `cpDdiff` values differ significantly between negative and positive amplification curves (\autoref{plot_dat_EffTop}C).
 - `cpD2_range` is the absolute value of the difference between the minimum and the maximum of the second derivative maximum ($cpD2\_range = |cpD2m - cpD2|$) from the ``diffQ2()`` function (**no model fitted**) (\autoref{figure_cpD2_range}E). The `cpD2_range` value does not require an adjustment of a multiparametric model. The approximate first and second derivatives are determined using a five-point stencil [@roediger2015chippcr]. The comparison of positive and negative amplification curves in \autoref{plot_dat_EffTop}E shows that the classes differ significantly from each other. In the event that the `cpD2_range` value cannot be determined (NA), it is replaced by zero. The `cpD2_range` values differ significantly between negative and positive amplification curves (\autoref{plot_dat_EffTop}E).
 - `cpD2_approx` is the approximate second derivative maximum. In most cases the value should be close to the `cpD2`. Deviations indicate noise in the data, negative amplification curves or positive amplification curves that deviate from a typical sigmoid amplification curve.
-- `cpD2_ratio` is is the ratio between the the approximate second derivative maximum `cpD2_approx` and the second derivative maximum `cpD2` ($cpD2_ratio = cpD2 / cpD2_approx$). In the event that the `cpD2_ratio` value cannot be determined (NA, Inf), it is replaced by zero. Provided that a model can be exactly fitted and that the function has little noise the ratio between both values should be close to 1. Note: Empirical data suggest that an interval of 0.85 and 1.1 indicates positive amplification curves. These can be set to 1. Values outside this interval indicate non-sigmoidal (e.g., negative) amplification curves. These can be set to 0.
+- `cpD2_ratio` is is the ratio between the the approximate second derivative maximum `cpD2_approx` and the second derivative maximum `cpD2` ($cpD2_ratio = cpD2 / cpD2_approx$). In the event that the `cpD2_ratio` value cannot be determined (NA, Inf), it is replaced by zero. Provided that a model can be exactly fitted and that the function has little noise the ratio between both values should be close to 1. Note: Empirical data suggest that an interval of 0.85 and 1.1 indicates positive amplification curves. These can be set to 1. Values outside this interval indicate non-sigmoidal (e.&nbsp;g.,, negative) amplification curves. These can be set to 0.
 
 
 ```{r figure_cpD2_range, echo=FALSE, results='hide', fig.cap=figure_cpD2_range, fig.scap=figure_cpD2_range_short, fig.height=4} 
@@ -3071,6 +3073,218 @@ mtext("D", cex = 1, side = 3, adj = 0, font = 2)
 The analysis gives an overview on the variation of the amplification curve data.
 
 \newpage
+
+# Case study for the application of the PCRedux package
+
+In this case study we used 400 amplification curves from the *kbqPCR* dataset from and assign them to the object *curves*. For the example qPCR data from a real experiment with a CFX96 (Bio-Rad) were used. It is an allelic specific PCR with TaqMan probes (FAM, HEX, ROX, Cy5, Cy5-5) (experimental details are described in @romaniuk_rapid_2019. Original pcrd and rdml files are here:
+[https://github.com/kablag/AScall/tree/master/examples](https://github.com/kablag/AScall/tree/master/examples)
+
+```{R}
+curves <- ncol(kbqPCR)
+```
+
+Before we start we need to load additional libraries (some from CRAN, some from github.com).
+
+```{R}
+library(qpcR)
+library(PCRedux)
+
+library(dplyr)
+library(forcats)
+library(reshape2)
+
+library(mlr)
+
+library(ggplot2)
+
+if("devtools" %in% rownames(installed.packages()) == FALSE) {
+  library(devtools)
+}
+
+if("gbm" %in% rownames(installed.packages()) == FALSE) {
+  install.packages("gbm")
+}
+
+if("patchwork" %in% rownames(installed.packages())) {
+  library(patchwork)
+} else {
+  devtools::install_github("thomasp85/patchwork")
+  "patchwork" %in% rownames(installed.packages())
+  library(patchwork)
+}
+```
+
+The decision of the classes (negative, ambiguous, positive) were taken from the `decision_res_kbqPCR.rda` of the *PCRedux* package.
+
+```{r}
+dec <- unlist(lapply(1L:(curves -1), function(i) {
+  decision_modus(decision_res_kbqPCR[i, 2:8])
+}))
+
+class <- c(y = sum(dec == "y"), a = sum(dec == "a"), n = sum(dec == "n"))
+
+```
+
+## Visualizng qPCR curves
+
+As a definition for a positive amplification curve, it is assumed that it has a sigmoid shape and a good signal-to-noise ratio. An ambiguous amplification curve has a signal that is above the noise level but has no sigmoid form. In this example, the ambiguous amplification curves are almost linear and do not show a plateau. Negative amplification curves do not achieve a high signal and do not show a sigmoid curve.
+
+
+```{r}
+p1_pos <- data.frame(kbqPCR[, c(1L, which(dec == "y") + 1)]) %>% 
+  melt(id.vars = "cyc") %>%
+  ggplot(aes(x = cyc, y = value, color = variable)) +
+  geom_line() +
+  theme_bw() +
+  xlab("Cycle") +
+  ylab("Raw RFU") +
+  ggtitle(paste0("A) positive, ", "n = ", class[1])) + #qPCR curves
+  theme(legend.position = "none")
+
+# Positive Curves
+p1_pos
+
+p1_neg <- data.frame(kbqPCR[, c(1L, which(dec == "n") + 1)]) %>% 
+  melt(id.vars = "cyc") %>%
+  ggplot(aes(x = cyc, y = value, color = variable)) +
+  geom_line() +
+  theme_bw() +
+  xlab("Cycle") +
+  ylab("Raw RFU") +
+  ggtitle(paste0("negative, ", "n = ", class[3])) + #qPCR curves
+  theme(legend.position = "none")
+
+# Negative Curves
+p1_neg
+
+p1_amb <- data.frame(kbqPCR[, c(1L, which(dec == "a") + 1)]) %>% 
+  melt(id.vars = "cyc") %>%
+  ggplot(aes(x = cyc, y = value, color = variable)) +
+  geom_line() +
+  theme_bw() +
+  xlab("Cycle") +
+  ylab("Raw RFU") +
+  ggtitle(paste0("ambiguous, ", "n = ", class[2])) + #qPCR curves
+  theme(legend.position = "none")
+
+# Ambiguous Curves
+p1_amb
+
+```
+
+
+## Calculating some parameters with the encu() function
+
+The *encu()* function was used to calculate some parameters that are later used for the machine learning. Please be patient, this step will take some time.
+
+```{r}
+res <- encu(kbqPCR[, 1L:curves])
+
+
+head(res)
+```
+
+## Merging decisions and features into one dataset
+
+Since the parameters from the calculations with the *encu()* function and the decisions are known by now, we can merge them into a single dataframe.
+
+```{r}
+dat <- cbind(res, decision = factor(c("ambiguous", "negative", "positive")[dec], 
+                                    levels = c("positive", "ambiguous", "negative"))) %>%
+  select(cpD2, amptester_polygon, cpDdiff, decision) %>%
+  filter(!is.na(dec))
+
+head(dat)
+```
+
+## Visualizing the parameter calculations
+
+Next we visualize the results of the parameter calculations.
+
+```{r}
+p2 <- ggplot(data = dat %>%
+               mutate(id = rownames(dat)) %>%
+               melt(id.vars = c("id", "decision")), 
+             aes(x = decision, y = value)) +
+  geom_boxplot() +
+  theme_bw() +
+  facet_wrap(~ variable, scales = "free_y") +
+  scale_y_continuous("Value [A.U.]") +
+  scale_x_discrete("Assessment") +
+  ggtitle("B)") # Separation of types of curves by encu() parameters
+
+p2
+```
+
+## Modeling with different classifiers
+
+Building the models follows the typical steps involving the definition of the splits, classifiers and their tasks. Here we use the *mlr* package.
+We want to classify only! As classifiers we use:
+
+- Random Forest (classif.ranger),
+- Support Vector Machines (classif.ksvm),
+- linear discriminant analysis (classif.lda),
+- Generalized Boosted Regression Models (classif.gbm),
+- Multinomial Regression (classif.multinom) and
+- Generalized Linear Regression with Lasso or Elasticnet Regularization (classif.glmnet).
+
+```{r}
+tsk <- makeClassifTask("pcr_classif", data = dat, target = "decision")
+
+mdls <- list()
+mdls[[1]] <- makeLearner("classif.ranger", predict.type = "prob")
+mdls[[2]] <- makeLearner("classif.ksvm", predict.type = "prob")
+mdls[[3]] <- makeLearner("classif.lda", predict.type = "prob")
+mdls[[4]] <- makeLearner("classif.gbm", predict.type = "prob")
+mdls[[5]] <- makeLearner("classif.multinom", predict.type = "prob")
+mdls[[6]] <- makeLearner("classif.glmnet", predict.type = "prob")
+
+set.seed(4732)
+results <- do.call(rbind, lapply(mdls, function(mdl) {
+  res <- resample(mdl, tsk, cv10, measures = list(mmce, multiclass.au1u))
+  cbind(model = res[["learner.id"]], res[["measures.test"]])
+}))
+results[["model"]] <- fct_recode(results[["model"]],
+                                 `ranger::ranger` = "classif.ranger", 
+                                 `kernlab::ksvm` = "classif.ksvm",
+                                 `MASS::lda` = "classif.lda",
+                                 `gbm::gbm` = "classif.gbm",
+                                 `nnet::multinom` = "classif.multinom",
+                                 `glmnet::glmnet` = "classif.glmnet")
+```
+
+## Visualizing the model results
+
+```{r}
+p3 <- ggplot(data = results, aes(x = model, y = multiclass.au1u)) +
+  geom_point(position = position_jitter(width = 0.2, seed = 4)) + 
+  geom_errorbar(data = results %>% 
+                  group_by(model) %>% 
+                  summarise(auc = median(multiclass.au1u)), 
+                aes(x = model, ymin = auc, ymax = auc), 
+                inherit.aes = FALSE, color = "#FC5E61",
+                width = 0.5) +
+  theme_bw() + 
+  xlab("Model") +
+  ylab("Mean AUC (one vs all)") +
+  ggtitle("C)") # Results of crossvalidating models trained on encu() parameters
+
+p3
+```
+
+## Final plot
+
+Finally we plot all findings in a summary graphic.
+
+```{r}
+cairo_ps("figure1.eps", width = 11, height = 3.1)
+p1_pos + {
+    p1_neg +
+      p1_amb +
+      plot_layout(ncol = 1)
+  } + p2 + plot_layout(ncol = 3, widths = c(1, 1, 4))
+dev.off()
+```
 
 # Summary and Conclusions  \label{section_Summary_and_conclusions}
 
