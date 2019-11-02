@@ -3076,14 +3076,7 @@ The analysis gives an overview on the variation of the amplification curve data.
 
 # Case study for the application of the PCRedux package
 
-In this case study we used 400 amplification curves from the *kbqPCR* dataset from and assign them to the object *curves*. For the example qPCR data from a real experiment with a CFX96 (Bio-Rad) were used. It is an allelic specific PCR with TaqMan probes (FAM, HEX, ROX, Cy5, Cy5-5) (experimental details are described in @romaniuk_rapid_2019. Original pcrd and rdml files are here:
-[https://github.com/kablag/AScall/tree/master/examples](https://github.com/kablag/AScall/tree/master/examples)
-
-```{R}
-curves <- ncol(kbqPCR)
-```
-
-Before we start we need to load additional libraries (some from CRAN, some from github.com).
+In this case study we used 400 amplification curves from the *kbqPCR* dataset from and assign them to the object *curves*. Before we start we need to load additional libraries (some from CRAN, some from github.com).
 
 ```{R}
 library(qpcR)
@@ -3114,6 +3107,16 @@ if("patchwork" %in% rownames(installed.packages())) {
 }
 ```
 
+For the example qPCR data from a real experiment with a CFX96 (Bio-Rad) were used. It is an allelic specific PCR with TaqMan probes (FAM, HEX, ROX, Cy5, Cy5-5) (experimental details are described in @romaniuk_rapid_2019. Original pcrd and rdml files are here:
+[https://github.com/kablag/AScall/tree/master/examples](https://github.com/kablag/AScall/tree/master/examples)
+
+```{R}
+# Determine the Number of amplification curves
+curves <- ncol(kbqPCR)
+
+paste("Number of amplification curves:", curves - 1)
+```
+
 The decision of the classes (negative, ambiguous, positive) were taken from the `decision_res_kbqPCR.rda` of the *PCRedux* package.
 
 ```{r}
@@ -3123,9 +3126,14 @@ dec <- unlist(lapply(1L:(curves -1), function(i) {
 
 class <- c(y = sum(dec == "y"), a = sum(dec == "a"), n = sum(dec == "n"))
 
+# Plot the classes
+barplot(table(dec), col = c("green", "red", "grey"), 
+        main = "Frequency of Classes assed by a Human")
+legend("topright", c("y: positive", "n: negtive", "a: ambigous"))
+text(c(1:3), rep(150,3), class[c(1,3,2)])
 ```
 
-## Visualizng qPCR curves
+## Visualizng qPCR curves separated as positive, negative and ambigous Amplification Curves
 
 As a definition for a positive amplification curve, it is assumed that it has a sigmoid shape and a good signal-to-noise ratio. An ambiguous amplification curve has a signal that is above the noise level but has no sigmoid form. In this example, the ambiguous amplification curves are almost linear and do not show a plateau. Negative amplification curves do not achieve a high signal and do not show a sigmoid curve.
 
