@@ -148,7 +148,7 @@ plot_random_forest_short <- "Random Forest"
 }
 \end{figure}
 
-The PDF version of this document is available [online](https://github.com/devSJR/PCRedux/raw/master/docs/articles/PCRedux.pdf).
+The PDF version of this document is available [online](https://github.com/PCRuniversum/PCRedux-supplements/blob/master/PCRedux.pdf).
 
 # Aims of the Project
 
@@ -2135,7 +2135,7 @@ colors <- factor(dec, levels = c("y", "n"), label = c("black", "green"))
 # Test for autocorrelation in the subset of the htPCR data set
 
 res_ac <- sapply(2:ncol(data), function(i) {
-    autocorrelation_test(data[, i], ns_2_numeric = TRUE)
+    autocorrelation_test(data[, i])
 })
 
 
