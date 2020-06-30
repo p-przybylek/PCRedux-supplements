@@ -1111,59 +1111,6 @@ print(xtable(
 ), comment = FALSE, caption.placement = "top")
 ```
 
-In another example, the results from the ``mblrr()`` function were combined with human classifications (positive, negative) to apply them in an analysis with Fast and Frugal Trees (FFTrees). FFTrees belong to class of simple decision rules. DT's are a classic approach to machine learning [@quinlan_induction_1986]. Here relatively simple algorithms and simple tree structures are used to create a model. A general introduction to decision trees is given in [@quinlan_induction_1986; @luan_signal-detection_2011]. In many situations, FFTrees make fast decisions based on a few predictors (N = 1 - 5). In this example six predictors were used for the analysis.
-
-The \texttt{FFTrees} package [@FFTrees_package] provides an implementation for the \texttt{R} statistical computing language. All that is needed for the present example are:
-
-* the data assessed by the ``mblrr()`` function,
-* the classification of the amplification curve data by a human,
-* and a standard formula, which looks like $outcome \sim var1 + var2 + \ldots$ along with the data arguments. The function ``FFTrees()`` returns a fast and frugal tree object. This rich object contains the underlying trees and many classification statistics (similar to \autoref{section_performeR}). In the following example, the `RAS002` data set was used.
-
-```{r, eval=TRUE, echo=TRUE}
-# Load the xtable library for an appealing table output
-library(FFTrees)
-library(PCRedux)
-
-# The RAS002 amplification curves were analyzed with the mblrr() function 
-# to save computing time and the.results of this analysis are stored in the 
-# `data_sample` data set.
-
-data <- data_sample[data_sample$dataset == "RAS002", c("mblrr_intercept_bg", 
-                                                       "mblrr_slope_bg", 
-                                                       "mblrr_cor_bg", 
-                                                       "mblrr_intercept_pt", 
-                                                       "mblrr_slope_pt", 
-                                                       "mblrr_cor_pt")]
-
-# The output variable names of the mblrr() function are rather long. For better
-# readability the variable names were changed to "nBG" (intercept of head
-# region), "mBG" (slope of head region), "rBG" (Pearson correlation of head
-# region), "nTP" (intercept of tail region), "mTP" (slope of tail region),
-# "rBG" (Pearson correlation of tail region).
-
-
-res_mblrr <- data.frame(
-    class = as.numeric(as.character(factor(RAS002_decisions, 
-                                           levels = c("y", "n"), 
-                                           label = c(1, 0)))),
-  data
-)
-
-colnames(res_mblrr) <- c("class", "nBG", "mBG", "rBG", "nTP", "mTP", "rTP")
-
-res_mblrr.fft <- suppressMessages(
-            FFTrees(formula = class ~., data = res_mblrr)
-            )
-``` 
-
-\autoref{plot_FFTrees} shows the Fast and Frugal Trees by using the predictors nBG (intercept of head region), mBG (slope of head region), rBG (Pearson correlation of head region), nTP (intercept of tail region), mTP (slope of tail region), and rBG (Pearson correlation of tail region). 
-
-
-```{r plot_FFTrees, echo=FALSE, fig.cap=plot_FFTrees, fig.scap=plot_FFTrees_short, fig.height=11, fig.width=11}
-plot(res_mblrr.fft, decision.lables = c("Positive", "Negative"))
-```
-
-\texttt{R} offers several packages like \texttt{party} [@hothorn_unbiased_2006], \texttt{rpart} [@rpart_2017] and \texttt{Rattle} [@williams_rattle:_2009] for creating and visualizing decision trees. 
 
 ### ``autocorrelation_test()`` - A Function to Detect Positive Amplification Curves \label{section_autocorrelation_test}
 
@@ -1902,13 +1849,5 @@ mtext("D", cex = 1, side = 3, adj = 0, font = 2)
 
 The analysis gives an overview on the variation of the amplification curve data.
 
-
-# Summary and Conclusions  \label{section_Summary_and_conclusions}
-
-Extensive amounts of data represent a serious challenge in the analysis of qPCR amplification curves. In a manual classification (e.&nbsp;g. negative, positive), the result is usually characterized by the subjective perception of the experimenter. In addition, the time required for a manual analysis is high. An automatic system for amplification curve analysis might objectify and generalize the decision process. Interestingly, so far most authors focused on the extraction of single predictors from amplification curves. These are mainly the Cq and the amplification efficiency, which are used for the downstream processing such as expression analysis or genotyping [@pabinger_2014]. 
-
-Numerous software tools were developed, which deal with theses analytical steps. For example @baebler_quantgenius:_2017 published \texttt{quantGenius} and @mallona_chainy:_nodate published \texttt{Chainy}. However, none of them attempts to make use of characteristics of the amplification curve. Positive amplification curves usually exhibit a sigmoid shape, consisting of a ground phase, exponential phase, and plateau phase. Negative amplification curves resemble flat noisy signal. As a result, the experienced user is usually able to correctly interpret the curve shape. Similarly, outliers and measurement errors can also be identified. When setting up a qPCR assay, manual data analysis is a useful and necessary approach to familiarize oneself with the properties of the qPCR amplification curves.
-
-It is challenging to analyze and classify amplification curves if they deviate substantially from the sigmoid shape or if their number is no longer feasible for manual analysis. Furthermore, the supposed objectivity of the user must also be questioned. In the scientific environment there is often the temptation - or rather the compulsion - to use all data for publications. As a result, amplification curves of rather poor quality are often provided. In \autoref{htPCR_nap_frequency} it was demonstrated that a reproducible and objective analysis of amplification curves is not always given. 
 
 # References
