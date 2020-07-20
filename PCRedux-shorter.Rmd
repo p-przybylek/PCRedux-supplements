@@ -1271,7 +1271,7 @@ hookreg.rdml             | Bio-Rad   | various               | TaqMan, DNA bindi
 \begin{tabular}{llll}
 \hline
 Decision Datasets in PCRedux                    & qPCR Dataset               & Package              & Device         \\ \hline
-decision\_res\_RAS002.csv                        & RAS002.rdml                 & \texttt{PCRedux}   & CFX96, Bio-Rad \\
+decision\_res\_RAS002.csv                        & RAS002                      & \texttt{PCRedux}   & CFX96, Bio-Rad \\
 decision\_res\_RAS003.csv                        & RAS003.rdml                 & \texttt{PCRedux}   & CFX96, Bio-Rad \\
 decision\_res\_batsch1.csv                       & batsch1                     & \texttt{qpcR}      & Light Cycler 1.0, Roche \\
 decision\_res\_batsch2.csv                       & batsch2                     & \texttt{qpcR}      & Light Cycler 1.0, Roche \\
@@ -1303,7 +1303,7 @@ decision\_res\_reps2.csv                         & reps2                       &
 decision\_res\_reps3.csv                         & reps3                       & \texttt{qpcR}      & MXPro3000P, Stratagene \\
 decision\_res\_reps384.csv                       & reps384                     & \texttt{qpcR}      & CFX384, Bio-Rad \\
 decision\_res\_rutledge.csv                      & rutledge                    & \texttt{qpcR}      & Opticon 2, MJ Research \\
-decision\_res\_stepone\_std.csv                  & stepone\_std                & \texttt{RDML}      & StepOne, AB
+decision\_res\_stepone\_std.csv                  & stepone\_std.rdml           & \texttt{RDML}      & StepOne, AB
 \\
 decision\_res\_testdat.csv                       & testdat                     & \texttt{qpcR}      & Light Cycler 1.0, Roche \\
 decision\_res\_vermeulen1.csv                    & vermeulen1                  & \texttt{qpcR}      & Light Cycler 480, Roche \\
